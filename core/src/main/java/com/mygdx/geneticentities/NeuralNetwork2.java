@@ -1,0 +1,69 @@
+package com.mygdx.geneticentities;
+
+import java.util.Random;
+
+public class NeuralNetwork2 {
+    private float[][] weights;  // 4x2 weight matrix
+    private static final Random random = new Random();
+
+    public NeuralNetwork2(int inputSize, int outputSize) {
+        weights = new float[inputSize][outputSize];
+        //Random random = new Random();
+
+        // Initialize random weights (-1 to 1)
+        for (int i = 0; i < inputSize; i++) {
+            for (int j = 0; j < outputSize; j++) {
+                weights[i][j] = random.nextFloat() * 2 - 1;
+            }
+        }
+    }
+
+    public void randomize(int inputSize, int outputSize){
+        for (int i = 0; i < inputSize; i++) {
+            for (int j = 0; j < outputSize; j++) {
+                weights[i][j] = random.nextFloat() * 2 - 1;
+            }
+        }
+    }
+
+    public float[] feedForward(float[] inputs) {
+        float[] outputs = new float[weights[0].length];
+
+        for (int j = 0; j < outputs.length; j++) {
+            outputs[j] = 0;
+            for (int i = 0; i < inputs.length; i++) {
+                // System.out.print(" j: " + j + " i: " + i + "weights i: " + weights.length + " j: " + weights[i].length);
+                outputs[j] += inputs[i] * weights[i][j];  // Weighted sum
+            }
+            outputs[j] = sigmoid(outputs[j]);  // Activation function
+        }
+        return outputs;
+    }
+
+    private float sigmoid(float x) {
+        return 1 / (1 + (float) Math.exp(-x));
+    }
+
+    public static NeuralNetwork2 crossover(NeuralNetwork2 p1, NeuralNetwork2 p2) {
+        NeuralNetwork2 child = new NeuralNetwork2(8, 2);
+        for (int i = 0; i < child.weights.length; i++) {
+            for(int j = 0; j < child.weights[0].length; j++){
+                child.weights[i][j] = (random.nextBoolean()) ? p1.weights[i][j] : p2.weights[i][j];
+            }
+
+        }
+        return child;
+    }
+
+    public void mutate(int inputSize, int outputSize){
+        int a;
+        for (int i = 0; i < inputSize; i++) {
+            for (int j = 0; j < outputSize; j++) {
+                a = random.nextInt(100);
+                if(a <= 70){
+                    weights[i][j] = random.nextFloat() * 2 - 1;
+                }
+            }
+        }
+    }
+}
