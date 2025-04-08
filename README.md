@@ -1,3 +1,6 @@
+GENETIC ALGORITHM FILES: Block.java, Robot.java, GeneticAlgorithm.java, NeuralNetwork.java and Main.java
+The rest of the java files are thrash files, but Im too afraid to delete them and break it all
+
 # GeneticEntities
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
